@@ -55,11 +55,12 @@ class LoginController extends Controller
 
         $newUser = new User;
         $newUser->email = $user->getEmail();
-        
+
         $newUser->name = $user->getName();
         $newUser->password = bcrypt(123456);//or make null in db and here
         $newUser->save();
         Auth::login($newUser);
+
 
         dd($newUser);
     }
