@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Socialite;
+use App\User;
 
 class LoginController extends Controller
 {
@@ -52,6 +53,14 @@ class LoginController extends Controller
     {
         $user = Socialite::driver('google')->user();
 
-        dd($user);
+        $newUser = new User;
+        $newUser->email = $user->getEmail();
+        
+        $newUser->name = $user->getName();
+        $newUser->password = bcrypt(123456);//or make null in db and here
+        $newUser->save();
+        Auth::login($newUser);
+
+        dd($newUser);
     }
 }
